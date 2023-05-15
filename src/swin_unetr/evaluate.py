@@ -35,12 +35,12 @@ def evaluate_dataset(dir1: Path, dir2: Path, output_file: Optional[Path] = None)
         label1 = sitk.ReadImage(f1, sitk.sitkUInt8)
         label2 = sitk.ReadImage(f2, sitk.sitkUInt8)
         vals = compare_labels(label1, label2, [artery_id, vein_id])
-        rows.append(f1.name.replace(".nii.gz", "") + f", {vals[0]}, {vals[1]}")
+        rows.append((f1.name.replace(".nii.gz", ""), vals[0], vals[1]))
 
     if output_file:
         with open(output_file, "w") as f:
-            for r in rows:
-                print(r, file=f)
+            for (n, v1, v2) in rows:
+                print(f"{n}, {v1}, {v2}", file=f)
     return rows
 
 
@@ -55,24 +55,27 @@ def write_datalist(
 ):
     """find top N files each for ge, siemens, philips"""
     vals = evaluate_dataset(pred_dir, label_dir, None)
+
     # select top N datasets (highest Dice)
-    vals_ge = [(v2, n) for (n, _, v2) in vals if "_ge" in n].sort(
-        key=lambda x: x[0], reverse=True
+    vals_ge = sorted(
+        [(v1, n) for (n, v1, _) in vals if "_ge" in n], key=lambda x: x[0], reverse=True
     )[:N]
-    vals_siemens = [(v2, n) for (n, _, v2) in vals if "siemens" in n].sort(
-        key=lambda x: x[0], reverse=True
+    vals_siemens = sorted(
+        [(v1, n) for (n, v1, _) in vals if "siemens" in n],
+        key=lambda x: x[0],
+        reverse=True,
     )[:N]
-    vals_philips = [(v2, n) for (n, _, v2) in vals if "philips" in n].sort(
-        key=lambda x: x[0], reverse=True
+    vals_philips = sorted(
+        [(v1, n) for (n, v1, _) in vals if "philips" in n],
+        key=lambda x: x[0],
+        reverse=True,
     )[:N]
 
     # shuffle datasets
     r = random.Random(10918)
-    vals_ge, vals_siemens, vals_philips = (
-        r.shuffle(vals_ge),
-        r.shuffle(vals_siemens),
-        r.shuffle(vals_philips),
-    )
+    r.shuffle(vals_ge)
+    r.shuffle(vals_siemens)
+    r.shuffle(vals_philips)
 
     # use 3 x 5 as test images
     test: List[str] = []
@@ -92,7 +95,7 @@ def write_datalist(
             )
 
     # min 20% for validation
-    num_training = 0.8 * len(pairs)
+    num_training = int(0.8 * len(pairs))
     data = {
         "test": test,
         "training": pairs[:num_training],
@@ -103,3 +106,6 @@ def write_datalist(
 
 if __name__ == "__main__":
     app()
+
+    # python src\swin_unetr\evaluate.py evaluate-dataset C:\Users\lloyd\datasets\CC\vein_artery_all_pred C:\Users\lloyd\datasets\CC\charm_artery_veins --output-file C:\Users\lloyd\datasets\CC\vein_artery_all_pred.txt
+    # python src\swin_unetr\evaluate.py write-datalist C:\Users\lloyd\datasets\CC\vein_artery_all_pred C:\Users\lloyd\datasets\CC\charm_artery_veins C:\Users\lloyd\datasets\CC\t1w_n4_1mm C:\Users\lloyd\datasets\CC C:\Users\lloyd\datasets\CC\vein_artery_best.json

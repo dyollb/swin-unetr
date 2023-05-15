@@ -111,7 +111,7 @@ def main(
             SaveImaged(
                 keys="pred",
                 output_dir=output_dir,
-                output_postfix="seg",
+                output_postfix="",
                 resample=False,
                 separate_folder=False,
                 print_log=False,
