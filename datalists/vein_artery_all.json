@@ -1,0 +1,715 @@
+{
+  "description": "Calgary-Campinas",
+  "labels": {
+    "1": "Artery",
+    "2": "Vein"
+  },
+  "test": [
+    "t1w_n4\\CC0026_philips_15_65_M.nii.gz",
+    "t1w_n4\\CC0171_siemens_15_51_M.nii.gz",
+    "t1w_n4\\CC0040_philips_15_55_F.nii.gz",
+    "t1w_n4\\CC0228_siemens_3_66_M.nii.gz",
+    "t1w_n4\\CC0195_siemens_3_55_F.nii.gz",
+    "t1w_n4\\CC0247_ge_15_53_M.nii.gz",
+    "t1w_n4\\CC0240_ge_15_60_F.nii.gz",
+    "t1w_n4\\CC0183_siemens_3_58_M.nii.gz",
+    "t1w_n4\\CC0025_philips_15_51_M.nii.gz",
+    "t1w_n4\\CC0248_ge_15_51_M.nii.gz"
+  ],
+  "training": [
+    {
+      "image": "t1w_n4\\CC0196_siemens_3_48_M.nii.gz",
+      "label": "charm_artery_veins\\CC0196_siemens_3_48_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0033_philips_15_67_M.nii.gz",
+      "label": "charm_artery_veins\\CC0033_philips_15_67_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0135_siemens_15_52_M.nii.gz",
+      "label": "charm_artery_veins\\CC0135_siemens_15_52_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0039_philips_15_41_F.nii.gz",
+      "label": "charm_artery_veins\\CC0039_philips_15_41_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0209_siemens_3_57_F.nii.gz",
+      "label": "charm_artery_veins\\CC0209_siemens_3_57_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0191_siemens_3_59_F.nii.gz",
+      "label": "charm_artery_veins\\CC0191_siemens_3_59_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0162_siemens_15_39_M.nii.gz",
+      "label": "charm_artery_veins\\CC0162_siemens_15_39_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0178_siemens_15_55_F.nii.gz",
+      "label": "charm_artery_veins\\CC0178_siemens_15_55_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0032_philips_15_44_M.nii.gz",
+      "label": "charm_artery_veins\\CC0032_philips_15_44_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0011_philips_15_49_F.nii.gz",
+      "label": "charm_artery_veins\\CC0011_philips_15_49_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0129_siemens_15_54_F.nii.gz",
+      "label": "charm_artery_veins\\CC0129_siemens_15_54_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0227_siemens_3_58_M.nii.gz",
+      "label": "charm_artery_veins\\CC0227_siemens_3_58_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0181_siemens_3_36_F.nii.gz",
+      "label": "charm_artery_veins\\CC0181_siemens_3_36_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0009_philips_15_69_M.nii.gz",
+      "label": "charm_artery_veins\\CC0009_philips_15_69_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0057_philips_15_61_F.nii.gz",
+      "label": "charm_artery_veins\\CC0057_philips_15_61_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0206_siemens_3_58_M.nii.gz",
+      "label": "charm_artery_veins\\CC0206_siemens_3_58_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0138_siemens_15_56_F.nii.gz",
+      "label": "charm_artery_veins\\CC0138_siemens_15_56_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0164_siemens_15_54_M.nii.gz",
+      "label": "charm_artery_veins\\CC0164_siemens_15_54_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0226_siemens_3_64_F.nii.gz",
+      "label": "charm_artery_veins\\CC0226_siemens_3_64_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0020_philips_15_65_F.nii.gz",
+      "label": "charm_artery_veins\\CC0020_philips_15_65_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0182_siemens_3_60_F.nii.gz",
+      "label": "charm_artery_veins\\CC0182_siemens_3_60_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0147_siemens_15_58_F.nii.gz",
+      "label": "charm_artery_veins\\CC0147_siemens_15_58_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0208_siemens_3_56_F.nii.gz",
+      "label": "charm_artery_veins\\CC0208_siemens_3_56_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0189_siemens_3_66_F.nii.gz",
+      "label": "charm_artery_veins\\CC0189_siemens_3_66_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0190_siemens_3_63_F.nii.gz",
+      "label": "charm_artery_veins\\CC0190_siemens_3_63_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0002_philips_15_56_M.nii.gz",
+      "label": "charm_artery_veins\\CC0002_philips_15_56_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0141_siemens_15_53_F.nii.gz",
+      "label": "charm_artery_veins\\CC0141_siemens_15_53_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0051_philips_15_44_F.nii.gz",
+      "label": "charm_artery_veins\\CC0051_philips_15_44_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0238_siemens_3_58_M.nii.gz",
+      "label": "charm_artery_veins\\CC0238_siemens_3_58_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0133_siemens_15_64_F.nii.gz",
+      "label": "charm_artery_veins\\CC0133_siemens_15_64_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0198_siemens_3_59_F.nii.gz",
+      "label": "charm_artery_veins\\CC0198_siemens_3_59_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0224_siemens_3_62_M.nii.gz",
+      "label": "charm_artery_veins\\CC0224_siemens_3_62_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0161_siemens_15_55_F.nii.gz",
+      "label": "charm_artery_veins\\CC0161_siemens_15_55_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0149_siemens_15_53_M.nii.gz",
+      "label": "charm_artery_veins\\CC0149_siemens_15_53_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0223_siemens_3_56_M.nii.gz",
+      "label": "charm_artery_veins\\CC0223_siemens_3_56_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0235_siemens_3_61_M.nii.gz",
+      "label": "charm_artery_veins\\CC0235_siemens_3_61_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0044_philips_15_36_M.nii.gz",
+      "label": "charm_artery_veins\\CC0044_philips_15_36_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0015_philips_15_44_M.nii.gz",
+      "label": "charm_artery_veins\\CC0015_philips_15_44_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0194_siemens_3_67_M.nii.gz",
+      "label": "charm_artery_veins\\CC0194_siemens_3_67_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0199_siemens_3_64_F.nii.gz",
+      "label": "charm_artery_veins\\CC0199_siemens_3_64_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0048_philips_15_53_M.nii.gz",
+      "label": "charm_artery_veins\\CC0048_philips_15_53_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0218_siemens_3_61_M.nii.gz",
+      "label": "charm_artery_veins\\CC0218_siemens_3_61_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0239_siemens_3_56_M.nii.gz",
+      "label": "charm_artery_veins\\CC0239_siemens_3_56_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0207_siemens_3_58_M.nii.gz",
+      "label": "charm_artery_veins\\CC0207_siemens_3_58_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0200_siemens_3_37_F.nii.gz",
+      "label": "charm_artery_veins\\CC0200_siemens_3_37_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0017_philips_15_50_F.nii.gz",
+      "label": "charm_artery_veins\\CC0017_philips_15_50_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0120_siemens_15_58_F.nii.gz",
+      "label": "charm_artery_veins\\CC0120_siemens_15_58_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0177_siemens_15_57_F.nii.gz",
+      "label": "charm_artery_veins\\CC0177_siemens_15_57_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0165_siemens_15_44_M.nii.gz",
+      "label": "charm_artery_veins\\CC0165_siemens_15_44_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0249_ge_15_58_F.nii.gz",
+      "label": "charm_artery_veins\\CC0249_ge_15_58_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0144_siemens_15_43_M.nii.gz",
+      "label": "charm_artery_veins\\CC0144_siemens_15_43_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0139_siemens_15_56_M.nii.gz",
+      "label": "charm_artery_veins\\CC0139_siemens_15_56_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0038_philips_15_41_F.nii.gz",
+      "label": "charm_artery_veins\\CC0038_philips_15_41_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0241_ge_15_60_F.nii.gz",
+      "label": "charm_artery_veins\\CC0241_ge_15_60_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0053_philips_15_39_F.nii.gz",
+      "label": "charm_artery_veins\\CC0053_philips_15_39_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0187_siemens_3_63_F.nii.gz",
+      "label": "charm_artery_veins\\CC0187_siemens_3_63_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0186_siemens_3_62_F.nii.gz",
+      "label": "charm_artery_veins\\CC0186_siemens_3_62_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0168_siemens_15_38_M.nii.gz",
+      "label": "charm_artery_veins\\CC0168_siemens_15_38_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0179_siemens_15_53_M.nii.gz",
+      "label": "charm_artery_veins\\CC0179_siemens_15_53_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0173_siemens_15_51_M.nii.gz",
+      "label": "charm_artery_veins\\CC0173_siemens_15_51_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0024_philips_15_65_F.nii.gz",
+      "label": "charm_artery_veins\\CC0024_philips_15_65_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0016_philips_15_55_M.nii.gz",
+      "label": "charm_artery_veins\\CC0016_philips_15_55_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0236_siemens_3_50_M.nii.gz",
+      "label": "charm_artery_veins\\CC0236_siemens_3_50_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0143_siemens_15_55_F.nii.gz",
+      "label": "charm_artery_veins\\CC0143_siemens_15_55_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0175_siemens_15_50_M.nii.gz",
+      "label": "charm_artery_veins\\CC0175_siemens_15_50_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0151_siemens_15_71_M.nii.gz",
+      "label": "charm_artery_veins\\CC0151_siemens_15_71_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0163_siemens_15_64_F.nii.gz",
+      "label": "charm_artery_veins\\CC0163_siemens_15_64_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0014_philips_15_62_F.nii.gz",
+      "label": "charm_artery_veins\\CC0014_philips_15_62_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0174_siemens_15_41_M.nii.gz",
+      "label": "charm_artery_veins\\CC0174_siemens_15_41_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0123_siemens_15_58_M.nii.gz",
+      "label": "charm_artery_veins\\CC0123_siemens_15_58_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0156_siemens_15_55_M.nii.gz",
+      "label": "charm_artery_veins\\CC0156_siemens_15_55_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0212_siemens_3_67_M.nii.gz",
+      "label": "charm_artery_veins\\CC0212_siemens_3_67_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0152_siemens_15_51_M.nii.gz",
+      "label": "charm_artery_veins\\CC0152_siemens_15_51_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0243_ge_15_58_F.nii.gz",
+      "label": "charm_artery_veins\\CC0243_ge_15_58_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0169_siemens_15_44_M.nii.gz",
+      "label": "charm_artery_veins\\CC0169_siemens_15_44_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0140_siemens_15_57_M.nii.gz",
+      "label": "charm_artery_veins\\CC0140_siemens_15_57_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0005_philips_15_62_M.nii.gz",
+      "label": "charm_artery_veins\\CC0005_philips_15_62_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0176_siemens_15_45_M.nii.gz",
+      "label": "charm_artery_veins\\CC0176_siemens_15_45_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0167_siemens_15_55_F.nii.gz",
+      "label": "charm_artery_veins\\CC0167_siemens_15_55_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0216_siemens_3_56_M.nii.gz",
+      "label": "charm_artery_veins\\CC0216_siemens_3_56_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0217_siemens_3_45_M.nii.gz",
+      "label": "charm_artery_veins\\CC0217_siemens_3_45_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0159_siemens_15_54_M.nii.gz",
+      "label": "charm_artery_veins\\CC0159_siemens_15_54_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0154_siemens_15_55_M.nii.gz",
+      "label": "charm_artery_veins\\CC0154_siemens_15_55_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0006_philips_15_63_F.nii.gz",
+      "label": "charm_artery_veins\\CC0006_philips_15_63_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0043_philips_15_58_F.nii.gz",
+      "label": "charm_artery_veins\\CC0043_philips_15_58_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0121_siemens_15_61_M.nii.gz",
+      "label": "charm_artery_veins\\CC0121_siemens_15_61_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0158_siemens_15_53_M.nii.gz",
+      "label": "charm_artery_veins\\CC0158_siemens_15_53_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0202_siemens_3_54_F.nii.gz",
+      "label": "charm_artery_veins\\CC0202_siemens_3_54_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0192_siemens_3_51_M.nii.gz",
+      "label": "charm_artery_veins\\CC0192_siemens_3_51_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0127_siemens_15_58_F.nii.gz",
+      "label": "charm_artery_veins\\CC0127_siemens_15_58_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0136_siemens_15_64_F.nii.gz",
+      "label": "charm_artery_veins\\CC0136_siemens_15_64_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0146_siemens_15_38_M.nii.gz",
+      "label": "charm_artery_veins\\CC0146_siemens_15_38_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0058_philips_15_64_F.nii.gz",
+      "label": "charm_artery_veins\\CC0058_philips_15_64_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0157_siemens_15_54_F.nii.gz",
+      "label": "charm_artery_veins\\CC0157_siemens_15_54_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0137_siemens_15_65_F.nii.gz",
+      "label": "charm_artery_veins\\CC0137_siemens_15_65_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0220_siemens_3_61_M.nii.gz",
+      "label": "charm_artery_veins\\CC0220_siemens_3_61_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0126_siemens_15_54_F.nii.gz",
+      "label": "charm_artery_veins\\CC0126_siemens_15_54_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0219_siemens_3_49_F.nii.gz",
+      "label": "charm_artery_veins\\CC0219_siemens_3_49_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0232_siemens_3_56_M.nii.gz",
+      "label": "charm_artery_veins\\CC0232_siemens_3_56_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0210_siemens_3_60_F.nii.gz",
+      "label": "charm_artery_veins\\CC0210_siemens_3_60_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0204_siemens_3_49_M.nii.gz",
+      "label": "charm_artery_veins\\CC0204_siemens_3_49_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0222_siemens_3_56_F.nii.gz",
+      "label": "charm_artery_veins\\CC0222_siemens_3_56_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0019_philips_15_57_F.nii.gz",
+      "label": "charm_artery_veins\\CC0019_philips_15_57_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0244_ge_15_56_F.nii.gz",
+      "label": "charm_artery_veins\\CC0244_ge_15_56_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0229_siemens_3_55_F.nii.gz",
+      "label": "charm_artery_veins\\CC0229_siemens_3_55_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0237_siemens_3_59_F.nii.gz",
+      "label": "charm_artery_veins\\CC0237_siemens_3_59_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0010_philips_15_69_F.nii.gz",
+      "label": "charm_artery_veins\\CC0010_philips_15_69_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0193_siemens_3_64_F.nii.gz",
+      "label": "charm_artery_veins\\CC0193_siemens_3_64_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0197_siemens_3_54_M.nii.gz",
+      "label": "charm_artery_veins\\CC0197_siemens_3_54_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0145_siemens_15_62_F.nii.gz",
+      "label": "charm_artery_veins\\CC0145_siemens_15_62_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0030_philips_15_42_F.nii.gz",
+      "label": "charm_artery_veins\\CC0030_philips_15_42_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0023_philips_15_43_M.nii.gz",
+      "label": "charm_artery_veins\\CC0023_philips_15_43_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0125_siemens_15_65_F.nii.gz",
+      "label": "charm_artery_veins\\CC0125_siemens_15_65_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0205_siemens_3_64_F.nii.gz",
+      "label": "charm_artery_veins\\CC0205_siemens_3_64_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0242_ge_15_55_F.nii.gz",
+      "label": "charm_artery_veins\\CC0242_ge_15_55_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0052_philips_15_51_M.nii.gz",
+      "label": "charm_artery_veins\\CC0052_philips_15_51_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0134_siemens_15_54_F.nii.gz",
+      "label": "charm_artery_veins\\CC0134_siemens_15_54_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0201_siemens_3_58_F.nii.gz",
+      "label": "charm_artery_veins\\CC0201_siemens_3_58_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0215_siemens_3_46_F.nii.gz",
+      "label": "charm_artery_veins\\CC0215_siemens_3_46_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0049_philips_15_43_F.nii.gz",
+      "label": "charm_artery_veins\\CC0049_philips_15_43_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0042_philips_15_67_M.nii.gz",
+      "label": "charm_artery_veins\\CC0042_philips_15_67_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0122_siemens_15_53_F.nii.gz",
+      "label": "charm_artery_veins\\CC0122_siemens_15_53_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0037_philips_15_41_M.nii.gz",
+      "label": "charm_artery_veins\\CC0037_philips_15_41_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0188_siemens_3_55_F.nii.gz",
+      "label": "charm_artery_veins\\CC0188_siemens_3_55_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0184_siemens_3_60_M.nii.gz",
+      "label": "charm_artery_veins\\CC0184_siemens_3_60_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0213_siemens_3_65_F.nii.gz",
+      "label": "charm_artery_veins\\CC0213_siemens_3_65_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0027_philips_15_41_M.nii.gz",
+      "label": "charm_artery_veins\\CC0027_philips_15_41_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0230_siemens_3_60_M.nii.gz",
+      "label": "charm_artery_veins\\CC0230_siemens_3_60_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0155_siemens_15_57_F.nii.gz",
+      "label": "charm_artery_veins\\CC0155_siemens_15_57_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0021_philips_15_48_F.nii.gz",
+      "label": "charm_artery_veins\\CC0021_philips_15_48_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0153_siemens_15_52_F.nii.gz",
+      "label": "charm_artery_veins\\CC0153_siemens_15_52_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0172_siemens_15_52_M.nii.gz",
+      "label": "charm_artery_veins\\CC0172_siemens_15_52_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0130_siemens_15_57_F.nii.gz",
+      "label": "charm_artery_veins\\CC0130_siemens_15_57_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0045_philips_15_49_F.nii.gz",
+      "label": "charm_artery_veins\\CC0045_philips_15_49_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0035_philips_15_49_F.nii.gz",
+      "label": "charm_artery_veins\\CC0035_philips_15_49_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0012_philips_15_43_M.nii.gz",
+      "label": "charm_artery_veins\\CC0012_philips_15_43_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0028_philips_15_63_F.nii.gz",
+      "label": "charm_artery_veins\\CC0028_philips_15_63_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0221_siemens_3_61_M.nii.gz",
+      "label": "charm_artery_veins\\CC0221_siemens_3_61_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0211_siemens_3_65_F.nii.gz",
+      "label": "charm_artery_veins\\CC0211_siemens_3_65_F.nii.gz"
+    }
+  ],
+  "validation": [
+    {
+      "image": "t1w_n4\\CC0050_philips_15_45_M.nii.gz",
+      "label": "charm_artery_veins\\CC0050_philips_15_45_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0132_siemens_15_71_F.nii.gz",
+      "label": "charm_artery_veins\\CC0132_siemens_15_71_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0128_siemens_15_54_F.nii.gz",
+      "label": "charm_artery_veins\\CC0128_siemens_15_54_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0203_siemens_3_56_F.nii.gz",
+      "label": "charm_artery_veins\\CC0203_siemens_3_56_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0180_siemens_3_39_F.nii.gz",
+      "label": "charm_artery_veins\\CC0180_siemens_3_39_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0185_siemens_3_52_M.nii.gz",
+      "label": "charm_artery_veins\\CC0185_siemens_3_52_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0013_philips_15_66_M.nii.gz",
+      "label": "charm_artery_veins\\CC0013_philips_15_66_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0170_siemens_15_55_F.nii.gz",
+      "label": "charm_artery_veins\\CC0170_siemens_15_55_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0142_siemens_15_59_M.nii.gz",
+      "label": "charm_artery_veins\\CC0142_siemens_15_59_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0047_philips_15_54_F.nii.gz",
+      "label": "charm_artery_veins\\CC0047_philips_15_54_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0225_siemens_3_47_F.nii.gz",
+      "label": "charm_artery_veins\\CC0225_siemens_3_47_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0148_siemens_15_58_F.nii.gz",
+      "label": "charm_artery_veins\\CC0148_siemens_15_58_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0246_ge_15_60_F.nii.gz",
+      "label": "charm_artery_veins\\CC0246_ge_15_60_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0131_siemens_15_41_M.nii.gz",
+      "label": "charm_artery_veins\\CC0131_siemens_15_41_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0214_siemens_3_51_M.nii.gz",
+      "label": "charm_artery_veins\\CC0214_siemens_3_51_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0056_philips_15_39_F.nii.gz",
+      "label": "charm_artery_veins\\CC0056_philips_15_39_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0018_philips_15_41_F.nii.gz",
+      "label": "charm_artery_veins\\CC0018_philips_15_41_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0231_siemens_3_56_M.nii.gz",
+      "label": "charm_artery_veins\\CC0231_siemens_3_56_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0160_siemens_15_57_F.nii.gz",
+      "label": "charm_artery_veins\\CC0160_siemens_15_57_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0245_ge_15_48_M.nii.gz",
+      "label": "charm_artery_veins\\CC0245_ge_15_48_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0233_siemens_3_52_M.nii.gz",
+      "label": "charm_artery_veins\\CC0233_siemens_3_52_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0022_philips_15_43_M.nii.gz",
+      "label": "charm_artery_veins\\CC0022_philips_15_43_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0034_philips_15_43_F.nii.gz",
+      "label": "charm_artery_veins\\CC0034_philips_15_43_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0041_philips_15_61_F.nii.gz",
+      "label": "charm_artery_veins\\CC0041_philips_15_61_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0029_philips_15_51_M.nii.gz",
+      "label": "charm_artery_veins\\CC0029_philips_15_51_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0046_philips_15_42_M.nii.gz",
+      "label": "charm_artery_veins\\CC0046_philips_15_42_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0007_philips_15_62_M.nii.gz",
+      "label": "charm_artery_veins\\CC0007_philips_15_62_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0036_philips_15_49_F.nii.gz",
+      "label": "charm_artery_veins\\CC0036_philips_15_49_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0004_philips_15_67_M.nii.gz",
+      "label": "charm_artery_veins\\CC0004_philips_15_67_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0150_siemens_15_47_M.nii.gz",
+      "label": "charm_artery_veins\\CC0150_siemens_15_47_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0166_siemens_15_39_M.nii.gz",
+      "label": "charm_artery_veins\\CC0166_siemens_15_39_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0124_siemens_15_57_F.nii.gz",
+      "label": "charm_artery_veins\\CC0124_siemens_15_57_F.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0054_philips_15_46_M.nii.gz",
+      "label": "charm_artery_veins\\CC0054_philips_15_46_M.nii.gz"
+    },
+    {
+      "image": "t1w_n4\\CC0008_philips_15_60_F.nii.gz",
+      "label": "charm_artery_veins\\CC0008_philips_15_60_F.nii.gz"
+    }
+  ]
+}
