@@ -39,7 +39,7 @@ def evaluate_dataset(dir1: Path, dir2: Path, output_file: Optional[Path] = None)
 
     if output_file:
         with open(output_file, "w") as f:
-            for (n, v1, v2) in rows:
+            for n, v1, v2 in rows:
                 print(f"{n}, {v1}, {v2}", file=f)
     return rows
 
