@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Setup python 3.9
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: "3.9"
       - name: Check format
@@ -16,10 +16,10 @@ jobs:
         with:
           options: "--check --diff"
           src: "src"
-      - name: Pip install test
+      - name: Pip install dev
         run: |
           which python
           python -m pip install --upgrade pip wheel
-          pip install --user ".[test]"
+          pip install --user ".[dev]"
       - name: Static analysis
         run: mypy .
