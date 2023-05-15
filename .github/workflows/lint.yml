@@ -1,0 +1,25 @@
+name: Lint
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+      - name: Check format
+        uses: psf/black@stable
+        with:
+          options: "--check --diff"
+          src: "src"
+      - name: Pip install dev
+        run: |
+          which python
+          python -m pip install --upgrade pip wheel
+          pip install --user ".[dev]"
+      - name: Static analysis
+        run: mypy .
