@@ -102,7 +102,7 @@ def main(
             EnsureTyped(keys="pred"),
             Invertd(
                 keys="pred",
-                transform=test_transforms,  # type: ignore [arg-type]
+                transform=test_transforms,
                 orig_keys="image",
                 nearest_interp=False,
                 to_tensor=True,
