@@ -157,3 +157,5 @@ if __name__ == "__main__":
 
     # python test.py --json-path datalists\hippocampus_all.json --model-path C:\Users\lloyd\datasets\CC\hippocampus_all_log\best_metric_model.pth --output-dir C:\Users\lloyd\datasets\CC\hippocampus_all_pred
     # python test.py --json-path datalists\vessels_all.json --model-path C:\Users\lloyd\datasets\CC\vessels_all_log\best_metric_model.pth --output-dir C:\Users\lloyd\datasets\CC\vessels_all_pred
+
+    # python src\swin_unetr\test.py --json-path datalists\brain_best.json --model-path C:\Users\lloyd\datasets\CC\brain_best_log\best_metric_model.pth --output-dir C:\Users\lloyd\datasets\CC\brain_best_pred
