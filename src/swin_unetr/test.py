@@ -1,4 +1,5 @@
 import json
+from enum import Enum
 from multiprocessing import freeze_support
 from pathlib import Path
 
@@ -13,7 +14,8 @@ from monai.data import (
     load_decathlon_datalist,
 )
 from monai.inferers import SlidingWindowInferer
-from monai.networks.nets import SwinUNETR
+from monai.networks.layers import Norm
+from monai.networks.nets import SwinUNETR, UNet
 from monai.transforms import (
     AsDiscreted,
     Compose,
@@ -30,6 +32,12 @@ from monai.transforms import (
 from tqdm import tqdm
 
 
+class Model(Enum):
+    SWIN = "swin"
+    UNET_256 = "unet256"
+    UNET_128 = "unet128"
+
+
 def main(
     data_dir: Path = Path("C:/Users/lloyd/datasets/CC"),
     json_path: Path = Path("datalists/skull_vertebrae_20.json"),
@@ -38,6 +46,8 @@ def main(
     ),
     output_dir: Path = Path("C:/Users/lloyd/datasets/CC/skull_vertebrae_all_pred"),
     overlap: float = 0.5,
+    network: Model = Model.SWIN.value,
+    gpu_id: int = 0,
 ):
     freeze_support()
     print_config()
@@ -48,7 +58,7 @@ def main(
 
     output_dir.mkdir(exist_ok=True, parents=True)
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device(f"cuda:{gpu_id}" if torch.cuda.is_available() else "cpu")
 
     test_transforms = Compose(
         [
@@ -120,16 +130,30 @@ def main(
         ]
     )
 
-    model = SwinUNETR(
-        img_size=(96, 96, 96),
-        in_channels=1,
-        out_channels=num_classes,
-        feature_size=48,
-        drop_rate=0.0,
-        attn_drop_rate=0.0,
-        dropout_path_rate=0.0,
-        use_checkpoint=True,
-    )
+    if network == Model.SWIN:
+        model = SwinUNETR(
+            img_size=(96, 96, 96),
+            in_channels=1,
+            out_channels=num_classes,
+            feature_size=48,
+            drop_rate=0.0,
+            attn_drop_rate=0.0,
+            dropout_path_rate=0.0,
+            use_checkpoint=True,
+        )
+    else:
+        network_layers_map = {Model.UNET_128: 4, Model.UNET_256: 5}
+        num_layers = network_layers_map[network]
+        model = UNet(
+            spatial_dims=3,
+            in_channels=1,
+            out_channels=num_classes,
+            channels=[16 * pow(2, k) for k in range(num_layers)],
+            strides=[2] * (num_layers - 1),
+            dropout=0.0,
+            num_res_units=2,
+            norm=Norm.BATCH,
+        )
 
     model_dict = torch.load(model_path, map_location=device)
     model.load_state_dict(model_dict, strict=True)
@@ -159,3 +183,5 @@ if __name__ == "__main__":
     # python test.py --json-path datalists\vessels_all.json --model-path C:\Users\lloyd\datasets\CC\vessels_all_log\best_metric_model.pth --output-dir C:\Users\lloyd\datasets\CC\vessels_all_pred
 
     # python src\swin_unetr\test.py --json-path datalists\brain_best.json --model-path C:\Users\lloyd\datasets\CC\brain_best_log\best_metric_model.pth --output-dir C:\Users\lloyd\datasets\CC\brain_best_pred
+
+    # python src\swin_unetr\test.py --json-path datalists\head_mask_best.json --model-path C:\Users\lloyd\datasets\CC\head_mask_log\best_metric_model.pth --output-dir C:\Users\lloyd\datasets\CC\head_mask_pred --network unet256
