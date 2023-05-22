@@ -103,5 +103,91 @@ def make_head_mask(input_dir: Path, output_dir: Path):
         print("C0.8 0.1 0.1 0.5 Head", file=file)
 
 
+def fill_holes_slice_by_slice(mask: sitk.Image) -> sitk.Image:
+    """Fill holes"""
+    mask = mask != 0
+    output = sitk.Image(mask.GetSize(), mask.GetPixelID())
+    output.CopyInformation(mask)
+    for k in range(mask.GetSize()[2]):
+        output[:, :, k] = fill_holes(mask[:, :, k])
+    return output
+
+
+def fill_holes(mask: sitk.Image, min_hole_size: int = 0) -> sitk.Image:
+    """Fill holes"""
+    mask_closed = sitk.BinaryFillhole(mask, fullyConnected=False)
+    if min_hole_size == 0:
+        return mask_closed
+    holes = sitk.ConnectedComponent(mask_closed - mask)
+    holes = sitk.RelabelComponent(holes, minimumObjectSize=min_hole_size)
+    return mask | holes
+
+
+def binary_keep_largest(
+    binary_mask: sitk.Image,
+    num_largest: int = 1,
+) -> sitk.Image:
+    """Keep largest components"""
+    pixel_type = binary_mask.GetPixelID()
+    components = sitk.ConnectedComponent(binary_mask)
+    components = sitk.RelabelComponent(components)
+    return binary_mask - sitk.Cast(components > num_largest, pixel_type)
+
+
+def morphological_closing(
+    mask: sitk.Image, radius: int, close_holes: bool = False
+) -> sitk.Image:
+    """Close gaps and holes using morphological dilation and erosion"""
+    mask = sitk.ConstantPad(mask, [radius] * 3, [radius] * 3)
+    mask_dilated = sitk.BinaryDilate(mask, kernelRadius=[radius] * 3)
+    if close_holes:
+        mask_dilated = fill_holes_slice_by_slice(mask_dilated)
+    mask_closed = sitk.BinaryErode(mask_dilated, kernelRadius=[radius] * 3)
+    mask_closed = sitk.Crop(mask_closed, [radius] * 3, [radius] * 3)
+    return mask_closed
+
+
+def head_mask(image: sitk.Image, radius: int = 5) -> sitk.Image:
+    """Close gaps and holes using morphological dilation and erosion"""
+    otsu_mask = sitk.OtsuMultipleThresholds(image, 4, numberOfHistogramBins=200) != 0
+    head_mask_closed = fill_holes(
+        binary_keep_largest(
+            morphological_closing(otsu_mask, radius=radius, close_holes=True)
+        )
+    )
+    return head_mask_closed
+
+
+@app.command()
+def mask_t1(input_dir: Path, output_dir: Path):
+    output_dir.mkdir(exist_ok=True, parents=True)
+    for f in input_dir.glob("*.nii.gz"):
+        image = sitk.ReadImage(f, sitk.sitkFloat32)
+        mask = head_mask(image)
+        mask = mask + sitk.BinaryDilate(mask, [3] * mask.GetDimension())
+        sitk.WriteImage(mask, output_dir / f.name)
+
+    with open(output_dir / "tissue.txt", "w") as file:
+        print("V7", file=file)
+        print("N1", file=file)
+        print("C0.8 0.8 0.8 0.5 Halo", file=file)
+        print("C0.8 0.1 0.1 0.5 Head", file=file)
+
+
+@app.command()
+def add_boundary(input_dir: Path, output_dir: Path):
+    output_dir.mkdir(exist_ok=True, parents=True)
+    for f in input_dir.glob("*.nii.gz"):
+        mask = sitk.ReadImage(f, sitk.sitkUInt16)
+        mask = mask + sitk.BinaryDilate(mask, [3] * mask.GetDimension())
+        sitk.WriteImage(mask, output_dir / f.name)
+
+    with open(output_dir / "tissue.txt", "w") as file:
+        print("V7", file=file)
+        print("N2", file=file)
+        print("C0.8 0.8 0.8 0.5 Halo", file=file)
+        print("C0.8 0.1 0.1 0.5 Head", file=file)
+
+
 if __name__ == "__main__":
     app()
