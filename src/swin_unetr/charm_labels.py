@@ -7,6 +7,8 @@ import numpy as np
 import SimpleITK as sitk
 import typer
 
+app = typer.Typer()
+
 
 def map_image(
     labels: sitk.Image, label_map: np.ndarray, dissolve_label: int = -1
@@ -29,6 +31,7 @@ def map_image(
     return labels_mapped
 
 
+@app.command()
 def map_images(
     input_dir: Path,
     output_dir: Path,
@@ -72,5 +75,49 @@ def map_images(
     )
 
 
+@app.command()
+def modify_bones(
+    input_labels_dir: Path,
+    input_skull_dir: Path,
+    output_dir: Path,
+    label_map_path: Path,
+):
+    data = json.loads(label_map_path.read_text())
+    name2id = {v: int(k) for k, v in data.items()}
+
+    other_tissue_id = name2id["Other-Tissues"]
+    cancellous_id = name2id["Bone-Cancellous"]
+    cortical_id = name2id["Bone-Cortical"]
+
+    output_dir.mkdir(exist_ok=True, parents=True)
+    for f in input_labels_dir.glob("*.nii.gz"):
+        if not (input_skull_dir / f.name).exists():
+            print(f"WARNING: {f.name} skull mask not available")
+            # shutil.copyfile(f, input_skull_dir / f.name)
+            continue
+        labels = sitk.ReadImage(f, sitk.sitkUInt16)
+        labels_np = sitk.GetArrayFromImage(labels)
+        bones = sitk.ReadImage(input_skull_dir / f.name, sitk.sitkUInt16)
+        bones = sitk.Resample(
+            bones,
+            labels,
+            interpolator=sitk.sitkNearestNeighbor,
+        )
+        bones_np = sitk.GetArrayFromImage(bones)
+        assert (
+            labels_np.shape == bones_np.shape
+        ), f"{labels_np.shape} != {bones_np.shape}"
+
+        labels_np[labels_np == cancellous_id] = other_tissue_id
+        labels_np[labels_np == cortical_id] = other_tissue_id
+        bones_np[labels_np != other_tissue_id] = 0
+        labels_np[bones_np == 1] = cortical_id
+        labels_np[bones_np == 2] = cancellous_id
+
+        output = sitk.GetImageFromArray(labels_np)
+        output.CopyInformation(labels)
+        sitk.WriteImage(output, output_dir / f.name)
+
+
 if __name__ == "__main__":
-    typer.run(map_images)
+    app()

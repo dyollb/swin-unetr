@@ -6,6 +6,27 @@ from typing import List
 import typer
 
 
+def load_tissue_list(file_name: Path) -> dict[int, str]:
+    """Load tissue list in iSEG format
+    Example file with three non-background tissues:
+        V7
+        N3
+        C0.00 0.00 1.00 0.50 Bone
+        C0.00 1.00 0.00 0.50 Fat
+        C1.00 0.00 0.00 0.50 Skin
+    """
+    tissue_label_map: dict[int, str] = {0: "Background"}
+    next_id = 1
+    with open(file_name) as f:
+        for line in f.readlines():
+            if line.startswith("C"):
+                tissue = "_".join(line.strip().split(" ")[4:])
+                print(tissue)
+                tissue_label_map[next_id] = tissue
+                next_id += 1
+    return tissue_label_map
+
+
 def find_matching_files(input_globs: List[Path], verbose: bool = True):
     dir_0 = Path(input_globs[0].anchor)
     glob_0 = str(input_globs[0].relative_to(dir_0))
@@ -34,17 +55,36 @@ def find_matching_files(input_globs: List[Path], verbose: bool = True):
     return output_files
 
 
-def main(
+def make_datalist(
     data_dir: Path = Path("C:/Users/lloyd/datasets/CC"),
-    t1_dir: Path = Path("t1w_n4/*.nii.gz"),
-    labels_dir: Path = Path("skull_vertebrae2/*.nii.gz"),
-    dataset_path: Path = Path("datalists") / "skull_vertebrae_all.json",
+    t1_dir: Path = Path("t1w_n4_1mm/*.nii.gz"),
+    labels_dir: Path = Path("charm_corrected4_squeezed/*.nii.gz"),
+    dataset_path: Path = Path("datalists") / "charm_corrected4_all.json",
+    tissuelist_path: Path | None = None,
     percent: float = 1.0,
-):
+    test_only: bool = False,
+) -> int:
+    tissuelist = {"1": "Skull", "2": "Vertebrae"}
+    if tissuelist_path is not None:
+        tissue_map = load_tissue_list(tissuelist_path)
+        tissue_map.pop(0)
+        tissuelist = {str(id): tissue_map[id] for id in tissue_map}
+
+    if test_only:
+        data_config = {
+            "description": "Calgary-Campinas",
+            "labels": tissuelist,
+            "test": [
+                str(f.relative_to(data_dir))
+                for f in (data_dir / t1_dir).glob("*.nii.gz")
+            ],
+            "training": [],
+            "validation": [],
+        }
+        return dataset_path.write_text(json.dumps(data_config, indent=2))
+
     pairs = find_matching_files([data_dir / t1_dir, data_dir / labels_dir])
     pairs = [(im.relative_to(data_dir), lbl.relative_to(data_dir)) for im, lbl in pairs]
-
-    labels = {"1": "Skull", "2": "Vertebrae"}
 
     random.Random(104).shuffle(pairs)
     test, pairs = pairs[:10], pairs[10:]
@@ -54,7 +94,7 @@ def main(
 
     data_config = {
         "description": "Calgary-Campinas",
-        "labels": labels,
+        "labels": tissuelist,
         "test": [str(im) for im, _ in test],
         "training": [
             {"image": str(im), "label": str(lbl)} for im, lbl in pairs[:num_training]
@@ -64,8 +104,12 @@ def main(
         ],
     }
 
-    dataset_path.write_text(json.dumps(data_config, indent=2))
+    return dataset_path.write_text(json.dumps(data_config, indent=2))
+
+
+def main():
+    typer.run(make_datalist)
 
 
 if __name__ == "__main__":
-    typer.run(main)
+    main()

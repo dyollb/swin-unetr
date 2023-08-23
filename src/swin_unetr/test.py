@@ -34,8 +34,8 @@ from tqdm import tqdm
 
 class Model(Enum):
     SWIN = "swin"
-    UNET_256 = "unet256"
-    UNET_128 = "unet128"
+    UNET_16 = "unet_tile16"
+    UNET_32 = "unet_tile32"
 
 
 def main(
@@ -58,7 +58,9 @@ def main(
 
     output_dir.mkdir(exist_ok=True, parents=True)
 
-    device = torch.device(f"cuda:{gpu_id}" if torch.cuda.is_available() else "cpu")
+    device = torch.device(
+        f"cuda:{gpu_id}" if torch.cuda.is_available() and gpu_id >= 0 else "cpu"
+    )
 
     test_transforms = Compose(
         [
@@ -142,13 +144,14 @@ def main(
             use_checkpoint=True,
         )
     else:
-        network_layers_map = {Model.UNET_128: 4, Model.UNET_256: 5}
-        num_layers = network_layers_map[network]
+        network_layers_map = {Model.UNET_32: 4, Model.UNET_16: 5}  # noqa F841
+        num_layers = 5  # network_layers_map[network]
+        tile_size = 16  # 256 // pow(2, num_layers - 1)
         model = UNet(
             spatial_dims=3,
             in_channels=1,
             out_channels=num_classes,
-            channels=[16 * pow(2, k) for k in range(num_layers)],
+            channels=[tile_size * pow(2, k) for k in range(num_layers)],
             strides=[2] * (num_layers - 1),
             dropout=0.0,
             num_res_units=2,
@@ -185,3 +188,5 @@ if __name__ == "__main__":
     # python src\swin_unetr\test.py --json-path datalists\brain_best.json --model-path C:\Users\lloyd\datasets\CC\brain_best_log\best_metric_model.pth --output-dir C:\Users\lloyd\datasets\CC\brain_best_pred
 
     # python src\swin_unetr\test.py --json-path datalists\head_mask_best.json --model-path C:\Users\lloyd\datasets\CC\head_mask_log\best_metric_model.pth --output-dir C:\Users\lloyd\datasets\CC\head_mask_pred --network unet256
+
+    # python src\swin_unetr\test.py --json-path "C:\Users\lloyd\datasets\IXI\ixi_dataset_sf_style.json" --model-path "C:\Users\lloyd\datasets\CC\sf_style_best_log\best_metric_model.pth" --output-dir C:\Users\lloyd\datasets\IXI\sf_style_pred
