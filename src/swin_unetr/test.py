@@ -20,7 +20,6 @@ from monai.transforms import (
     AsDiscreted,
     Compose,
     CropForegroundd,
-    EnsureChannelFirstd,
     EnsureTyped,
     Invertd,
     LoadImaged,
@@ -34,13 +33,14 @@ from tqdm import tqdm
 
 class Model(Enum):
     SWIN = "swin"
+    SWIN2 = "swin2"
     UNET_16 = "unet_tile16"
     UNET_32 = "unet_tile32"
 
 
 def main(
     data_dir: Path = Path("C:/Users/lloyd/datasets/CC"),
-    json_path: Path = Path("datalists/skull_vertebrae_20.json"),
+    datalist_path: Path = Path("datalists/skull_vertebrae_20.json"),
     model_path: Path = Path(
         "C:/Users/lloyd/datasets/CC/skull_vertebrae_all_log/best_metric_model.pth"
     ),
@@ -48,24 +48,31 @@ def main(
     overlap: float = 0.5,
     network: Model = Model.SWIN.value,
     gpu_id: int = 0,
+    datalist_key: str = "test",
 ):
     freeze_support()
     print_config()
 
-    labels = json.loads(json_path.read_text())["labels"]
+    data: dict = json.loads(datalist_path.read_text())
+
+    labels = data["labels"]
+    num_channels = data.get("num_channels", 1)
     labels = {int(k): v for k, v in labels.items()}
     num_classes = max(labels.keys()) + 1
 
     output_dir.mkdir(exist_ok=True, parents=True)
 
-    device = torch.device(
-        f"cuda:{gpu_id}" if torch.cuda.is_available() and gpu_id >= 0 else "cpu"
-    )
+    use_gpu = torch.cuda.is_available() and gpu_id >= 0
+    device = torch.device(f"cuda:{gpu_id}" if use_gpu else "cpu")
 
     test_transforms = Compose(
         [
-            LoadImaged(keys=["image"], reader="ITKReader"),
-            EnsureChannelFirstd(keys=["image"]),
+            LoadImaged(
+                keys=["image"],
+                reader="ITKReader",
+                ensure_channel_first=True,
+                image_only=False,
+            ),
             Orientationd(keys=["image"], axcodes="RAS"),
             Spacingd(
                 keys=["image"],
@@ -80,9 +87,9 @@ def main(
 
     test_files = load_decathlon_datalist(
         base_dir=data_dir,
-        data_list_file_path=json_path,
+        data_list_file_path=datalist_path,
         is_segmentation=True,
-        data_list_key="test",
+        data_list_key=datalist_key,
     )
 
     test_ds = CacheDataset(
@@ -98,7 +105,7 @@ def main(
         batch_size=1,
         shuffle=False,
         num_workers=0,
-        pin_memory=not torch.cuda.is_available(),
+        pin_memory=not use_gpu,
     )
 
     inferer = SlidingWindowInferer(
@@ -132,16 +139,17 @@ def main(
         ]
     )
 
-    if network == Model.SWIN:
+    if network in (Model.SWIN, Model.SWIN2):
         model = SwinUNETR(
             img_size=(96, 96, 96),
-            in_channels=1,
+            in_channels=num_channels,
             out_channels=num_classes,
             feature_size=48,
             drop_rate=0.0,
             attn_drop_rate=0.0,
             dropout_path_rate=0.0,
             use_checkpoint=True,
+            use_v2=network == Model.SWIN2,
         )
     else:
         network_layers_map = {Model.UNET_32: 4, Model.UNET_16: 5}  # noqa F841
@@ -149,7 +157,7 @@ def main(
         tile_size = 16  # 256 // pow(2, num_layers - 1)
         model = UNet(
             spatial_dims=3,
-            in_channels=1,
+            in_channels=num_channels,
             out_channels=num_classes,
             channels=[tile_size * pow(2, k) for k in range(num_layers)],
             strides=[2] * (num_layers - 1),

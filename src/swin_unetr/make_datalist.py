@@ -59,10 +59,12 @@ def make_datalist(
     data_dir: Path = Path("C:/Users/lloyd/datasets/CC"),
     t1_dir: Path = Path("t1w_n4_1mm/*.nii.gz"),
     labels_dir: Path = Path("charm_corrected4_squeezed/*.nii.gz"),
-    dataset_path: Path = Path("datalists") / "charm_corrected4_all.json",
+    datalist_path: Path = Path("datalists") / "charm_corrected4_all.json",
+    num_channels: int = 1,
     tissuelist_path: Path | None = None,
     percent: float = 1.0,
     test_only: bool = False,
+    seed: int = 104,
 ) -> int:
     tissuelist = {"1": "Skull", "2": "Vertebrae"}
     if tissuelist_path is not None:
@@ -71,22 +73,24 @@ def make_datalist(
         tissuelist = {str(id): tissue_map[id] for id in tissue_map}
 
     if test_only:
+        input_glob = data_dir / t1_dir
+        dir_0 = Path(input_glob.anchor)
+        glob_0 = str(input_glob.relative_to(dir_0))
+
         data_config = {
             "description": "Calgary-Campinas",
+            "num_channels": num_channels,
             "labels": tissuelist,
-            "test": [
-                str(f.relative_to(data_dir))
-                for f in (data_dir / t1_dir).glob("*.nii.gz")
-            ],
+            "test": [str(f.relative_to(data_dir)) for f in dir_0.glob(glob_0)],
             "training": [],
             "validation": [],
         }
-        return dataset_path.write_text(json.dumps(data_config, indent=2))
+        return datalist_path.write_text(json.dumps(data_config, indent=2))
 
     pairs = find_matching_files([data_dir / t1_dir, data_dir / labels_dir])
     pairs = [(im.relative_to(data_dir), lbl.relative_to(data_dir)) for im, lbl in pairs]
 
-    random.Random(104).shuffle(pairs)
+    random.Random(seed).shuffle(pairs)
     test, pairs = pairs[:10], pairs[10:]
 
     num_valid = int(percent * 0.2 * len(pairs))
@@ -94,6 +98,7 @@ def make_datalist(
 
     data_config = {
         "description": "Calgary-Campinas",
+        "num_channels": num_channels,
         "labels": tissuelist,
         "test": [str(im) for im, _ in test],
         "training": [
@@ -104,7 +109,7 @@ def make_datalist(
         ],
     }
 
-    return dataset_path.write_text(json.dumps(data_config, indent=2))
+    return datalist_path.write_text(json.dumps(data_config, indent=2))
 
 
 def main():
