@@ -1,3 +1,4 @@
+import pytest
 import torch
 from monai.networks.utils import normal_init
 from monai.networks import eval_mode
@@ -37,6 +38,16 @@ def test_CascadedUNet_serialize(tmp_path):
 
     assert compare_models(m, m2)
     assert compare_models(m.feature_nets[0], m2.feature_nets[0])
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA not available")
+def test_CascadedUNet_device():
+    device = torch.device("cuda:0")
+    m = CascadedUNet(1, [1], 2)
+    m.to(device)
+    
+    assert next(m.net.parameters()).is_cuda
+    assert next(m.feature_nets[0].parameters()).is_cuda
 
 
 def test_CascadedUNet_eval():
