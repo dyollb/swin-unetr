@@ -50,10 +50,6 @@ class CascadedUNet(torch.nn.Module):
         )
 
     def forward(self, x):
-        x_list = [x] + [m(x) for m in self.feature_nets]
-        x_combined = torch.cat(x_list)
+        x_list = [m(x) for m in self.feature_nets]
+        x_combined = torch.cat([x] + x_list, dim=1)
         return self.net(x_combined)
-
-    def string(self):
-        r = "\n".join([f"Feature {i}: {n}" for i, n in enumerate(self.feature_nets)])
-        return r + "\nNetwork: " + {self.net}
