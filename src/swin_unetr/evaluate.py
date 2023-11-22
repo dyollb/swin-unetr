@@ -1,7 +1,6 @@
 import json
 import random
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
 
 import SimpleITK as sitk
 import typer
@@ -10,23 +9,23 @@ app = typer.Typer()
 
 
 def compare_labels(
-    mask1: sitk.Image, mask2: sitk.Image, labels: List[int]
-) -> List[float]:
+    mask1: sitk.Image, mask2: sitk.Image, labels: list[int]
+) -> list[float]:
     calculator = sitk.LabelOverlapMeasuresImageFilter()
     calculator.Execute(mask1, mask2)
 
-    dice: List[float] = [calculator.GetDiceCoefficient(id) for id in labels]
+    dice: list[float] = [calculator.GetDiceCoefficient(id) for id in labels]
     return dice
 
 
 @app.command()
-def evaluate_dataset(dir1: Path, dir2: Path, output_file: Optional[Path] = None):
+def evaluate_dataset(dir1: Path, dir2: Path, output_file: Path | None = None):
     """Compute Dice for whole dataset (hardcoded labels: 1, 2)"""
     artery_id = 1
     vein_id = 2
 
     # find matching files
-    rows: List[Tuple[str, float, float]] = []
+    rows: list[tuple[str, float, float]] = []
     for f1 in dir1.glob("*.nii.gz"):
         f2 = dir2 / f1.name
         if not f2.exists():
@@ -78,12 +77,12 @@ def write_datalist(
     r.shuffle(vals_philips)
 
     # use 3 x 5 as test images
-    test: List[str] = []
+    test: list[str] = []
     for _, n in vals_ge[-5:] + vals_siemens[-5:] + vals_philips[-5:]:
         test.append(str(image_dir.relative_to(root_dir) / f"{n}.nii.gz"))
 
     # training and validation pairs, already shuffled
-    pairs: List[Dict[str, str]] = []
+    pairs: list[dict[str, str]] = []
     for id in range(N - 5):
         for n in (vals_ge[id][1], vals_siemens[id][1], vals_philips[id][1]):
             fn = f"{n}.nii.gz"

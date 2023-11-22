@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - "*.md"
+      - "*.png"
+      - "*.svg"
+      - "docs/**"
+      - ".vscode/**"
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - "*.md"
+      - "*.png"
+      - "*.svg"
+      - "docs/**"
+      - ".vscode/**"
+
+jobs:
+  build-and-test:
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+          name: "macos-latest - Python 3.10",
+          os: macos-latest,
+          python-version: "3.10"
+          }
+        - {
+          name: "windows-latest - Python 3.10",
+          os: windows-latest,
+          python-version: "3.10"
+          }
+        - {
+          name: "ubuntu-latest - Python 3.10",
+          os: ubuntu-latest,
+          python-version: "3.10"
+          }
+        - {
+          name: "ubuntu-latest - Python 3.11",
+          os: ubuntu-latest,
+          python-version: "3.11"
+          }
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        path: package_src
+    - name: Setup python ${{ matrix.config.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.config.python-version }}
+    - name: Pip cache
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-{{ matrix.config.python-version }}
+        restore-keys: |
+          ${{ runner.os }}-pip
+    - name: Pip install
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e package_src
+    - name: Pip install dev
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e "package_src[dev]"
+    - name: Test
+      working-directory: package_src
+      run: pytest tests
