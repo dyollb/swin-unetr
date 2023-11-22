@@ -9,6 +9,10 @@ class CascadedUNet(torch.nn.Module):
     A list of feature networks in a first layer is concatenated with the input
     image. The feature channels are trained separately (possibly with more data),
     to make the CascadedUNet more robust.
+
+    'feature_channel_list' lists the number of output channels of the feature
+    networks. If 'include_background_channel' is False, the channel==0 is not forwarded
+    to the second layer network.
     """
 
     def __init__(
@@ -16,18 +20,24 @@ class CascadedUNet(torch.nn.Module):
         in_channels: int,
         feature_channel_list: list[int],
         out_channels: int,
+        include_background_channel: bool = False,
     ):
         super().__init__()
 
+        self.include_background_channel = include_background_channel
         self.feature_nets = torch.nn.ModuleList()
         sum_feature_channels = 0
         for feature_channels in feature_channel_list:
-            sum_feature_channels += feature_channels
+            if self.include_background_channel:
+                sum_feature_channels += feature_channels
+            else:
+                sum_feature_channels += feature_channels - 1
+
             net = UNet(
                 spatial_dims=3,
                 in_channels=in_channels,
                 # features + background
-                out_channels=feature_channels + 1,
+                out_channels=feature_channels,
                 channels=(16, 32, 64, 128, 256),
                 strides=(2, 2, 2, 2),
                 dropout=0.0,
@@ -49,7 +59,9 @@ class CascadedUNet(torch.nn.Module):
         )
 
     def forward(self, x):
-        # discard background (channel==0)
-        x_list = [m(x)[:, 1:, ...] for m in self.feature_nets]
+        x_list = [m(x) for m in self.feature_nets]
+        if not self.include_background_channel:
+            # discard background (channel==0)
+            x_list = [xi[:, 1:, ...] for xi in x_list]
         x_combined = torch.cat([x] + x_list, dim=1)
         return self.net(x_combined)

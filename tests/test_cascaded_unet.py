@@ -23,7 +23,7 @@ def compare_models(model_1: torch.nn.Module, model_2: torch.nn.Module) -> bool:
 
 
 def test_CascadedUNet_serialize(tmp_path):
-    m = CascadedUNet(1, [1], 2)
+    m = CascadedUNet(1, [2], 2, include_background_channel=False)
     assert len(m.feature_nets) == 1
 
     nets = [m.net] + list(m.feature_nets.modules())
@@ -43,7 +43,7 @@ def test_CascadedUNet_serialize(tmp_path):
 @pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA not available")
 def test_CascadedUNet_device():
     device = torch.device("cuda:0")
-    m = CascadedUNet(1, [1], 2)
+    m = CascadedUNet(1, [2], 2, include_background_channel=False)
     m.to(device)
 
     assert next(m.net.parameters()).is_cuda
@@ -53,7 +53,7 @@ def test_CascadedUNet_device():
 def test_CascadedUNet_eval():
     input_shape = [1, 1, 96, 96, 96]
     expected_shape = [1, 2, 96, 96, 96]
-    net = CascadedUNet(1, [3], 2)
+    net = CascadedUNet(1, [3], 2, include_background_channel=False)
     with eval_mode(net):
         result = net(torch.randn(input_shape))
         assert list(result.shape) == expected_shape
