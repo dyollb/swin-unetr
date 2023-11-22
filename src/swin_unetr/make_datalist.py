@@ -1,7 +1,6 @@
 import json
 import random
 from pathlib import Path
-from typing import List
 
 import typer
 
@@ -27,7 +26,7 @@ def load_tissue_list(file_name: Path) -> dict[int, str]:
     return tissue_label_map
 
 
-def find_matching_files(input_globs: List[Path], verbose: bool = True):
+def find_matching_files(input_globs: list[Path], verbose: bool = True):
     dir_0 = Path(input_globs[0].anchor)
     glob_0 = str(input_globs[0].relative_to(dir_0))
     ext_0 = input_globs[0].name.rsplit("*")[-1]

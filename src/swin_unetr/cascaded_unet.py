@@ -1,5 +1,3 @@
-from typing import List
-
 import torch
 from monai.networks.layers import Norm
 from monai.networks.nets import UNet
@@ -16,7 +14,7 @@ class CascadedUNet(torch.nn.Module):
     def __init__(
         self,
         in_channels: int,
-        feature_channel_list: List[int],
+        feature_channel_list: list[int],
         out_channels: int,
     ):
         super().__init__()

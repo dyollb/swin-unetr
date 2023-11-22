@@ -46,7 +46,7 @@ def main(
     ),
     output_dir: Path = Path("C:/Users/lloyd/datasets/CC/skull_vertebrae_all_pred"),
     overlap: float = 0.5,
-    network: Model = Model.SWIN.value,
+    network: Model = Model.SWIN.value,  # type: ignore [assignment]
     gpu_id: int = 0,
     datalist_key: str = "test",
 ):
@@ -139,6 +139,7 @@ def main(
         ]
     )
 
+    model: SwinUNETR | UNet
     if network in (Model.SWIN, Model.SWIN2):
         model = SwinUNETR(
             img_size=(96, 96, 96),

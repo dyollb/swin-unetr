@@ -1,6 +1,5 @@
 import json
 from pathlib import Path
-from typing import Dict
 
 import itk
 import numpy as np
@@ -39,8 +38,8 @@ def map_images(
 ):
     data = json.loads(label_map_path.read_text())
     id2name = {int(k): v for k, v in data["labels"].items()}
-    name2name: Dict[str, str] = data["mapping"]
-    name2id: Dict[str, int] = {"Background": 0}
+    name2name: dict[str, str] = data["mapping"]
+    name2id: dict[str, int] = {"Background": 0}
 
     next_id = 1
     for n in name2name.values():
