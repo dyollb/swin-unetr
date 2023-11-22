@@ -5,16 +5,16 @@
     "2": "Vein"
   },
   "test": [
-    "t1w_n4_1mm\\CC0026_philips_15_65_M.nii.gz",
-    "t1w_n4_1mm\\CC0171_siemens_15_51_M.nii.gz",
-    "t1w_n4_1mm\\CC0040_philips_15_55_F.nii.gz",
-    "t1w_n4_1mm\\CC0228_siemens_3_66_M.nii.gz",
-    "t1w_n4_1mm\\CC0195_siemens_3_55_F.nii.gz",
-    "t1w_n4_1mm\\CC0247_ge_15_53_M.nii.gz",
-    "t1w_n4_1mm\\CC0240_ge_15_60_F.nii.gz",
-    "t1w_n4_1mm\\CC0183_siemens_3_58_M.nii.gz",
-    "t1w_n4_1mm\\CC0025_philips_15_51_M.nii.gz",
-    "t1w_n4_1mm\\CC0248_ge_15_51_M.nii.gz"
+    "t1w_n4\\CC0026_philips_15_65_M.nii.gz",
+    "t1w_n4\\CC0171_siemens_15_51_M.nii.gz",
+    "t1w_n4\\CC0040_philips_15_55_F.nii.gz",
+    "t1w_n4\\CC0228_siemens_3_66_M.nii.gz",
+    "t1w_n4\\CC0195_siemens_3_55_F.nii.gz",
+    "t1w_n4\\CC0247_ge_15_53_M.nii.gz",
+    "t1w_n4\\CC0240_ge_15_60_F.nii.gz",
+    "t1w_n4\\CC0183_siemens_3_58_M.nii.gz",
+    "t1w_n4\\CC0025_philips_15_51_M.nii.gz",
+    "t1w_n4\\CC0248_ge_15_51_M.nii.gz"
   ],
   "training": [
     {
