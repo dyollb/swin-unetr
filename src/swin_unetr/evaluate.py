@@ -1,7 +1,6 @@
 import json
 import random
 from pathlib import Path
-from typing import Optional
 
 import SimpleITK as sitk
 import typer
@@ -20,7 +19,7 @@ def compare_labels(
 
 
 @app.command()
-def evaluate_dataset(dir1: Path, dir2: Path, output_file: Optional[Path] = None):
+def evaluate_dataset(dir1: Path, dir2: Path, output_file: Path | None = None):
     """Compute Dice for whole dataset (hardcoded labels: 1, 2)"""
     artery_id = 1
     vein_id = 2
