@@ -52,7 +52,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
       with:
-        path: segmantic_src
+        path: package_src
     - name: Setup python ${{ matrix.config.python-version }}
       uses: actions/setup-python@v4
       with:
@@ -67,16 +67,11 @@ jobs:
     - name: Pip install
       run: |
         python -m pip install --upgrade pip
-        pip install -e segmantic_src
+        pip install -e package_src
     - name: Pip install dev
       run: |
         python -m pip install --upgrade pip
-        pip install -e "segmantic_src[dev]"
+        pip install -e "package_src[dev]"
     - name: Test
-      working-directory: segmantic_src
-      run: pytest --cov segmantic --cov-report=xml --cov-config=.coveragerc
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3.1.0
-      with:
-        flags: unittests #optional
-        working-directory: segmantic_src
+      working-directory: package_src
+      run: pytest tests
