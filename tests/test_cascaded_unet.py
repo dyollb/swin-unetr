@@ -1,7 +1,7 @@
 import pytest
 import torch
-from monai.networks.utils import normal_init
 from monai.networks import eval_mode
+from monai.networks.utils import normal_init
 
 from swin_unetr.cascaded_unet import CascadedUNet
 
@@ -26,7 +26,7 @@ def test_CascadedUNet_serialize(tmp_path):
     m = CascadedUNet(1, [1], 2)
     assert len(m.feature_nets) == 1
 
-    nets = [m.net] + m.feature_nets
+    nets = [m.net] + list(m.feature_nets.modules())
     for net_i in nets:
         for sm in net_i.modules():
             normal_init(sm)
@@ -45,7 +45,7 @@ def test_CascadedUNet_device():
     device = torch.device("cuda:0")
     m = CascadedUNet(1, [1], 2)
     m.to(device)
-    
+
     assert next(m.net.parameters()).is_cuda
     assert next(m.feature_nets[0].parameters()).is_cuda
 

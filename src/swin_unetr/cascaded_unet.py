@@ -21,22 +21,23 @@ class CascadedUNet(torch.nn.Module):
     ):
         super().__init__()
 
-        self.feature_nets: List[UNet] = []
+        self.feature_nets = torch.nn.ModuleList()
         sum_feature_channels = 0
         for feature_channels in feature_channel_list:
             sum_feature_channels += feature_channels
             net = UNet(
                 spatial_dims=3,
                 in_channels=in_channels,
-                out_channels=feature_channels,
+                # features + background
+                out_channels=feature_channels + 1,
                 channels=(16, 32, 64, 128, 256),
                 strides=(2, 2, 2, 2),
                 dropout=0.0,
                 num_res_units=2,
                 norm=Norm.BATCH,
             )
-            net.requires_grad_(False)
             self.feature_nets.append(net)
+        self.feature_nets.requires_grad_(False)
 
         self.net = UNet(
             spatial_dims=3,
@@ -50,6 +51,7 @@ class CascadedUNet(torch.nn.Module):
         )
 
     def forward(self, x):
-        x_list = [m(x) for m in self.feature_nets]
+        # discard background (channel==0)
+        x_list = [m(x)[:, 1:, ...] for m in self.feature_nets]
         x_combined = torch.cat([x] + x_list, dim=1)
         return self.net(x_combined)
