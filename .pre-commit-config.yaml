@@ -72,6 +72,10 @@ repos:
       - id: nbqa-black
         additional_dependencies: [black]
         name: format notebooks
+      - id: nbqa-pyupgrade
+        args: ["--py310-plus"]
+      - id: nbqa-isort
+        args: ["--float-to-top"]
       - id: nbqa-mypy
         additional_dependencies: [mypy]
         name: static analysis for notebooks
