@@ -26,6 +26,7 @@ class CascadedUNet(torch.nn.Module):
 
         self.include_background_channel = include_background_channel
         self.feature_nets = torch.nn.ModuleList()
+        self.softmax = torch.nn.Softmax(dim=1)
         sum_feature_channels = 0
         for feature_channels in feature_channel_list:
             if self.include_background_channel:
@@ -59,7 +60,7 @@ class CascadedUNet(torch.nn.Module):
         )
 
     def forward(self, x):
-        x_list = [m(x) for m in self.feature_nets]
+        x_list = [self.softmax(f(x)) for f in self.feature_nets]
         if not self.include_background_channel:
             # discard background (channel==0)
             x_list = [xi[:, 1:, ...] for xi in x_list]
